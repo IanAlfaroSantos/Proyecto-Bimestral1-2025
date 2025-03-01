@@ -7,7 +7,7 @@ import morgan from 'morgan';
 import { dbConnection } from './mongo.js';
 import limiter from '../src/middlewares/validar-cant-peticiones.js';
 import { createAdmin } from '../src/users/user.controller.js';
-import userRoutes from "../src/users/user.controller.js";
+import userRoutes from "../src/users/user.routes.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
