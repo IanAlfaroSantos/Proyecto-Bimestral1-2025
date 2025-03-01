@@ -270,7 +270,7 @@ export const updateRole = async (req, res = response) => {
             });
         }
         
-        const roleUpdate = await User.findByIdAdnUpdate(id, { role }, { new: true });
+        const roleUpdate = await User.findByIdAndUpdate(id, { role }, { new: true });
         
         res.status(200).json({
             success: true,
