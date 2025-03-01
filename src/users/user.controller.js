@@ -292,6 +292,7 @@ export const deleteUser = async (req, res = response) => {
     try {
 
         const { id } = req.params;
+        const { password } = req.body;
         
         const authenticatedUser = req.user;
         
@@ -322,6 +323,15 @@ export const deleteUser = async (req, res = response) => {
             return res.status(400).json({
                 success: false,
                 msg: 'You do not have permissions to delete a profile that is not yours'
+            });
+        }
+
+        const validPassword = await verify(user.password, password);
+
+        if (!validPassword) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Incorrect password'
             });
         }
         
