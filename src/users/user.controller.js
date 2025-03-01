@@ -170,6 +170,20 @@ export const updateUser = async (req, res = response) => {
         }
 
         const user = await User.findById(id);
+        if (user.username === "administrador") {
+            return res.status(400).json({
+                success: false,
+                msg: 'You cannot update the main ADMIN'
+            });
+        }
+        
+        if (req.user.id !== id && req.user.role !== "ADMIN") {
+            return res.status(400).json({
+                success: false,
+                msg: 'You do not have permissions to update a profile that is not yours'
+            });
+        }
+        
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -184,19 +198,6 @@ export const updateUser = async (req, res = response) => {
             });
         }
 
-        if (user.username === "administrador") {
-            return res.status(400).json({
-                success: false,
-                msg: 'You cannot update the main ADMIN'
-            });
-        }
-        
-        if (req.user.id !== id && req.user.role !== "ADMIN") {
-            return res.status(400).json({
-                success: false,
-                msg: 'You do not have permissions to update a profile that is not yours'
-            });
-        }
 
         if (password) {
             if (!currentPassword) {
@@ -249,6 +250,13 @@ export const updateRole = async (req, res = response) => {
         }
 
         const user = await User.findById(id);
+        if (user.username === "administrador") {
+            return res.status(400).json({
+                success: false,
+                msg: 'You cannot update the main ADMIN'
+            });
+        }
+
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -263,12 +271,6 @@ export const updateRole = async (req, res = response) => {
             });
         }
         
-        if (user.username === "administrador") {
-            return res.status(400).json({
-                success: false,
-                msg: 'You cannot update the main ADMIN'
-            });
-        }
         
         const roleUpdate = await User.findByIdAndUpdate(id, { role }, { new: true });
         
@@ -298,6 +300,20 @@ export const deleteUser = async (req, res = response) => {
         
         const user = await User.findById(id);
         
+        if (user.username === "administrador") {
+            return res.status(400).json({
+                success: false,
+                msg: 'You cannot update the main ADMIN'
+            });
+        }
+
+        if (req.user.id !== id && req.user.role !== "ADMIN") {
+            return res.status(400).json({
+                success: false,
+                msg: 'You do not have permissions to delete a profile that is not yours'
+            });
+        }
+        
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -312,19 +328,6 @@ export const deleteUser = async (req, res = response) => {
             });
         }
         
-        if (user.username === "administrador") {
-            return res.status(400).json({
-                success: false,
-                msg: 'You cannot update the main ADMIN'
-            });
-        }
-
-        if (req.user.id !== id && req.user.role !== "ADMIN") {
-            return res.status(400).json({
-                success: false,
-                msg: 'You do not have permissions to delete a profile that is not yours'
-            });
-        }
 
         const validPassword = await verify(user.password, password);
 
@@ -363,20 +366,6 @@ export const restoreUser = async (req, res = response) => {
         
         const user = await User.findById(id);
         
-        if (!user) {
-            return res.status(400).json({
-                success: false,
-                msg: 'User not found'
-            });
-        }
-        
-        if (user.estado === true) {
-            return res.status(400).json({
-                success: false,
-                msg: 'The user is already enabled'
-            });
-        }
-        
         if (user.username === "administrador") {
             return res.status(400).json({
                 success: false,
@@ -388,6 +377,20 @@ export const restoreUser = async (req, res = response) => {
             return res.status(400).json({
                 success: false,
                 msg: 'You do not have permissions to enabled'
+            });
+        }
+        
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                msg: 'User not found'
+            });
+        }
+        
+        if (user.estado === true) {
+            return res.status(400).json({
+                success: false,
+                msg: 'The user is already enabled'
             });
         }
         
