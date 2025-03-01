@@ -279,6 +279,7 @@ export const updateRole = async (req, res = response) => {
         });
         
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             msg: 'Error updating user role',
