@@ -183,6 +183,17 @@ export const updateUser = async (req, res = response) => {
                 msg: 'You do not have permissions to update a profile that is not yours'
             });
         }
+
+        if (username !== user.username) {
+            const existingUser = await User.findOne({ username });
+
+            if (existingUser) {
+                return res.status(400).json({
+                    success: false,
+                    msg: `The username ${ username } already exists in the database`
+                });
+            }
+        }
         
         if (!user) {
             return res.status(400).json({
@@ -197,7 +208,6 @@ export const updateUser = async (req, res = response) => {
                 msg: 'Error user disabled'
             });
         }
-
 
         if (password) {
             if (!currentPassword) {

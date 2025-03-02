@@ -39,7 +39,6 @@ router.put(
         validarJWT,
         check('id', 'Invalid ID').isMongoId(),
         check('id').custom(existeCategoryById),
-        validatorCategory,
         validarCampos
     ],
     updateCategory
