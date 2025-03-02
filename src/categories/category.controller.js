@@ -114,7 +114,13 @@ export const updateCategory = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { _id, name, ...data } = req.body;
+        const { _id, ...data } = req.body;
+        let { name } = req.body;
+
+        if (name) {
+            name = name.toLowerCase();
+            data.name = name;
+        }
 
         const category = await Category.findById(id);
 
