@@ -294,7 +294,7 @@ export const deleteUser = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { password } = req.body;
+        const { password, username } = req.body;
         
         const authenticatedUser = req.user;
         
@@ -303,7 +303,7 @@ export const deleteUser = async (req, res = response) => {
         if (user.username === "administrador") {
             return res.status(400).json({
                 success: false,
-                msg: 'You cannot update the main ADMIN'
+                msg: 'You cannot delete the main ADMIN'
             });
         }
 
@@ -328,6 +328,26 @@ export const deleteUser = async (req, res = response) => {
             });
         }
         
+        if (!username) {
+            return res.status(400).json({
+                success: false,
+                msg: 'You must provide the username to delete it'
+            });
+        }
+
+        if (!password) {
+            return res.status(400).json({
+                success: false,
+                msg: 'You must provide the password to delete it'
+            });
+        }
+
+        if (user.username !== username) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Incorrect username'
+            });
+        }
 
         const validPassword = await verify(user.password, password);
 
@@ -360,7 +380,7 @@ export const restoreUser = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { password } = req.body;
+        const { password, username } = req.body;
         
         const authenticatedUser = req.user;
         
@@ -369,7 +389,7 @@ export const restoreUser = async (req, res = response) => {
         if (user.username === "administrador") {
             return res.status(400).json({
                 success: false,
-                msg: 'You cannot update the main ADMIN'
+                msg: 'You cannot restore the main ADMIN'
             });
         }
 
@@ -391,6 +411,27 @@ export const restoreUser = async (req, res = response) => {
             return res.status(400).json({
                 success: false,
                 msg: 'The user is already enabled'
+            });
+        }
+
+        if (!username) {
+            return res.status(400).json({
+                success: false,
+                msg: 'You must provide the username to restore it'
+            });
+        }
+
+        if (!password) {
+            return res.status(400).json({
+                success: false,
+                msg: 'You must provide the password to restore it'
+            });
+        }
+
+        if (user.username !== username) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Incorrect username'
             });
         }
         

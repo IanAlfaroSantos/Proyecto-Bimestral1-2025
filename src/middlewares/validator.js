@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 import { validarCampos } from "./validar-campos.js";
-import { existenteEmail, existenteUsername } from "../helpers/db-validator.js";
+import { existenteEmail, existenteUsername, existenteName } from "../helpers/db-validator.js";
 
 export const validatorRegister = [
     body('name', 'The name is required').not().isEmpty(),
@@ -16,4 +16,12 @@ export const validatorLogin = [
     body('email').optional().isEmail().withMessage('Enter a valid email address'),
     body('username').optional().isString().withMessage('Enter a valid username'),
     body('password', 'Password must be at least 8 characters').isLength({ min: 8 })
+];
+
+export const validatorCategory = [
+    body('name', 'The name is required').not().isEmpty(),
+    body('name').custom(existenteName),
+    body('description', 'The description is required').not().isEmpty(),
+    body('description', 'The description is more than 50 characters').isLength({ max: 50 }),
+    validarCampos
 ];

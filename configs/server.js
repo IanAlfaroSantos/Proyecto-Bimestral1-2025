@@ -8,6 +8,8 @@ import { dbConnection } from './mongo.js';
 import limiter from '../src/middlewares/validar-cant-peticiones.js';
 import { createAdmin } from '../src/users/user.controller.js';
 import userRoutes from "../src/users/user.routes.js";
+import { defaultCategory } from '../src/categories/category.controller.js';
+import categoryRoutes from "../src/categories/category.routes.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -20,6 +22,7 @@ const middlewares = (app) => {
 
 const routes = (app) => {
     app.use("/onlineSale/v1/users", userRoutes);
+    app.use("/onlineSale/v1/categories", categoryRoutes);
 };
 
 const conectarDB = async () => {
@@ -27,6 +30,7 @@ const conectarDB = async () => {
         await dbConnection();
         console.log('¡¡Conexión a la base de datos exitosa!!');
         await createAdmin();
+        await defaultCategory();
     } catch (error) {
         console.error('Error al conectar a la base de datos:', error);
         process.exit(1);
