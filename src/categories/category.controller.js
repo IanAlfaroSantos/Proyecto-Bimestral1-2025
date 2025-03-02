@@ -114,7 +114,7 @@ export const updateCategory = async (req, res = response) => {
     try {
 
         const { id } = req.params;
-        const { _id, ...data } = req.body;
+        const { _id, name, ...data } = req.body;
 
         const category = await Category.findById(id);
 
@@ -146,6 +146,17 @@ export const updateCategory = async (req, res = response) => {
                 success: false,
                 msg: "You do not have permission to update this category"
             });
+        }
+
+        if (name !== category.name) {
+            const existingCategory = await Category.findOne({ name });
+
+            if (existingCategory) {
+                return res.status(400).json({
+                    success: false,
+                    msg: `The name ${ name } already exists in the database`
+                });
+            }
         }
 
         const updateCategory = await Category.findByIdAndUpdate(id, data, { new: true });
