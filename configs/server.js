@@ -10,6 +10,7 @@ import { createAdmin } from '../src/users/user.controller.js';
 import userRoutes from "../src/users/user.routes.js";
 import { defaultCategory } from '../src/categories/category.controller.js';
 import categoryRoutes from "../src/categories/category.routes.js";
+import productRoutes from "../src/products/product.routes.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -23,6 +24,7 @@ const middlewares = (app) => {
 const routes = (app) => {
     app.use("/onlineSale/v1/users", userRoutes);
     app.use("/onlineSale/v1/categories", categoryRoutes);
+    app.use("/onlineSale/v1/products", productRoutes);
 };
 
 const conectarDB = async () => {

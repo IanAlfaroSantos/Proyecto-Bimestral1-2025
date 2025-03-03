@@ -1,5 +1,6 @@
 import User from "../users/user.model.js";
 import Category from "../categories/category.model.js";
+import Product from "../products/product.model.js";
 
 export const existenteEmail = async (email = ' ') => {
 
@@ -42,6 +43,24 @@ export const existeCategoryById = async (id = '') => {
     const existeCategory = await Category.findById(id);
 
     if (!existeCategory) {
+        throw new Error(`The ID ${ id } does not exist in the database`);
+    }
+}
+
+export const existenteNameProduct = async (name = ' ') => {
+
+    const existeName = await Product.findOne({ name });
+
+    if (existeName) {
+        throw new Error(`The name ${ name } already exists in the database`);
+    }
+}
+
+export const existeProductById = async (id = '') => {
+
+    const existeProduct = await Product.findById(id);
+
+    if (!existeProduct) {
         throw new Error(`The ID ${ id } does not exist in the database`);
     }
 }

@@ -1,4 +1,5 @@
 import Category from "./category.model.js";
+import Product from "../products/product.model.js";
 import { request, response } from "express";
 
 export const saveCategory = async (req, res) => {
@@ -46,7 +47,7 @@ export const getCategories = async (req = request, res = response) => {
             })
         }
 
-        const [total, categories] = await Promise.all([
+        const [ total, categories ] = await Promise.all([
             Category.countDocuments(query),
             Category.find(query)
                .skip(Number(desde))
@@ -220,6 +221,11 @@ export const deleteCategory = async (req, res = response) => {
                 msg: "You cannot delete the category default General"
             });
         }
+
+        const product = await Product.updateMany(
+            { category: id },
+            { $set: { category: categoryGeneral._id }}
+        );
 
         const deleteCategory = await Category.findByIdAndUpdate(id, { estado: false }, { new: true });
 
