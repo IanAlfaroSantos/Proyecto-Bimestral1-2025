@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "67c6fc9fba20633ec8624d3b"
+  },
+  "name": "frutas",
+  "description": "Categoria para Frutas",
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T13:14:07.150Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-04T13:14:07.150Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c6fcafba20633ec8624d3f"
+  },
+  "name": "verduras",
+  "description": "Categoria para Verduras",
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T13:14:23.485Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-04T13:14:23.485Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c6fd5367636820c4ad76fb"
+  },
+  "name": "higiene",
+  "description": "Categoria para Higiene",
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T13:17:07.604Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-04T13:17:07.604Z"
+  }
+}]

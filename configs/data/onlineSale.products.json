@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "67c7152ff4cf3eab10cb2805"
+  },
+  "nameProduct": "manzana",
+  "description": "Este producto es de Estados Unidos",
+  "price": 21.25,
+  "stock": 47,
+  "category": {
+    "$oid": "67c6fc9fba20633ec8624d3b"
+  },
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T14:58:55.145Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-04T09:41:28.818Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c7154bf4cf3eab10cb280c"
+  },
+  "nameProduct": "banano",
+  "description": "Este producto es de Estados Unidos",
+  "price": 15,
+  "stock": 48,
+  "category": {
+    "$oid": "67c6fc9fba20633ec8624d3b"
+  },
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T14:59:23.740Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-04T09:41:29.043Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c71567f4cf3eab10cb2813"
+  },
+  "nameProduct": "shampoo",
+  "description": "Este producto es de Guatemala",
+  "price": 20,
+  "stock": 21,
+  "category": {
+    "$oid": "67c6fd5367636820c4ad76fb"
+  },
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T14:59:51.564Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-03T15:24:17.625Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c7157af4cf3eab10cb281a"
+  },
+  "nameProduct": "jabon",
+  "description": "Este producto es de Guatemala",
+  "price": 25.25,
+  "stock": 58,
+  "category": {
+    "$oid": "67c6fd5367636820c4ad76fb"
+  },
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-03-04T15:00:10.342Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-03T15:24:17.677Z"
+  }
+}]

@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "bd5ba696-5716-4ecb-9d41-16c0c2f0452d",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41997069"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kevin\",\r\n    \"surname\": \"Gutierrez\",\r\n    \"username\": \"Kevin\",\r\n    \"email\": \"kevin@gmail.com\",\r\n    \"password\": \"33333333\",\r\n    \"phone\": \"33576327\",\r\n    \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Administrador\",\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"Admin100\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users?limite=10&desde=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "limite",
+							"value": "10"
+						},
+						{
+							"key": "desde",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/67c1611e3908e405594d5476",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"67c1611e3908e405594d5476"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2MxNjE4NTM5MDhlNDA1NTk0ZDU0N2UiLCJpYXQiOjE3NDA3OTYxMjAsImV4cCI6MTc0MDc5OTcyMH0.ggTinSw9KYQBFtTenunXashbnrYnLcj57lKK_MvBLBw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kevi\",\r\n    \"surname\": \"Gutierre\",\r\n    \"username\": \"Kevin\",\r\n    \"email\": \"pablo10@gmail.com\",\r\n    \"currentPassword\": \"33333330\",\r\n    \"password\": \"33333330\",\r\n    \"phone\": \"32334232\",\r\n    \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/67c161853908e405594d547e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"67c161853908e405594d547e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Role",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2MxNjA4YTM5MDhlNDA1NTk0ZDU0NzEiLCJpYXQiOjE3NDA3OTYyOTcsImV4cCI6MTc0MDc5OTg5N30.vq_H7zR-CziEKV_6nIy8aJ27qvGRSiOROddX5YjWPeo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/role/67c161853908e405594d547e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"role",
+						"67c161853908e405594d547e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2MxNjA4YTM5MDhlNDA1NTk0ZDU0NzEiLCJpYXQiOjE3NDA3NDU5OTgsImV4cCI6MTc0MDc0OTU5OH0.K12CM_NNp5KpPXpOtlYTP6GNyqzzYNzC4kWf-rRoElM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"11111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/67c1611e3908e405594d5476",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"67c1611e3908e405594d5476"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restore User",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2MxNjA4YTM5MDhlNDA1NTk0ZDU0NzEiLCJpYXQiOjE3NDA3NDU5OTgsImV4cCI6MTc0MDc0OTU5OH0.K12CM_NNp5KpPXpOtlYTP6GNyqzzYNzC4kWf-rRoElM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"11111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/users/restore/67c1611e3908e405594d5476",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"users",
+						"restore",
+						"67c1611e3908e405594d5476"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

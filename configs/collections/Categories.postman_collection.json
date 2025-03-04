@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "27463893-1b26-4354-abde-da5a2be8004a",
+		"name": "Categories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41997069"
+	},
+	"item": [
+		{
+			"name": "Add Category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M2ZmI5ZWY1NmIyNGI4NTE1MDdmZWYiLCJpYXQiOjE3NDEwOTM5OTcsImV4cCI6MTc0MTA5NzU5N30.u_HD16vASQTtAxXsusPBYl9bcLbLtQPlRCPinLgn1R4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Higiene\",\r\n    \"description\": \"Categoria para Higiene\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/categories/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"categories",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M1YWI0MjViYTIwNWJhNTNhNTFhZTQiLCJpYXQiOjE3NDEwMjMzNzIsImV4cCI6MTc0MTAyNjk3Mn0.rrcdQZlzgKERXLxJemdd80d1aoKOcjPAkmuzG4JVZk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/categories?limite=10&desde=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "limite",
+							"value": "10"
+						},
+						{
+							"key": "desde",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2MxNjA4YTM5MDhlNDA1NTk0ZDU0NzEiLCJpYXQiOjE3NDA3OTYyOTcsImV4cCI6MTc0MDc5OTg5N30.vq_H7zR-CziEKV_6nIy8aJ27qvGRSiOROddX5YjWPeo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/categories/67c27419d1c51365460da57f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"categories",
+						"67c27419d1c51365460da57f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Category",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2MxNjA4YTM5MDhlNDA1NTk0ZDU0NzEiLCJpYXQiOjE3NDA3OTYyOTcsImV4cCI6MTc0MDc5OTg5N30.vq_H7zR-CziEKV_6nIy8aJ27qvGRSiOROddX5YjWPeo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Frutas\",\r\n    \"description\": \"Categoria para Frutas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/categories/67c27419d1c51365460da57f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"categories",
+						"67c27419d1c51365460da57f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M1YWI0MjViYTIwNWJhNTNhNTFhZTQiLCJpYXQiOjE3NDEwMjMzNzIsImV4cCI6MTc0MTAyNjk3Mn0.rrcdQZlzgKERXLxJemdd80d1aoKOcjPAkmuzG4JVZk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/categories/67c5da3cb46e9daa7b0e2821",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"categories",
+						"67c5da3cb46e9daa7b0e2821"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restore Category",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M1YWI0MjViYTIwNWJhNTNhNTFhZTQiLCJpYXQiOjE3NDEwMjMzNzIsImV4cCI6MTc0MTAyNjk3Mn0.rrcdQZlzgKERXLxJemdd80d1aoKOcjPAkmuzG4JVZk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/categories/restore/67c5da3cb46e9daa7b0e2821",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"categories",
+						"restore",
+						"67c5da3cb46e9daa7b0e2821"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

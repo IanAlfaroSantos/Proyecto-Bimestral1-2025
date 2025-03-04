@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "38f422b7-a2e9-49d3-b85b-657629c7a584",
+		"name": "Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41997069"
+	},
+	"item": [
+		{
+			"name": "Add Product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M2ZmI5ZWY1NmIyNGI4NTE1MDdmZWYiLCJpYXQiOjE3NDExMDAzMjAsImV4cCI6MTc0MTEwMzkyMH0.0fq0TPi4L8oyMd3ZzD0WSrkmUBJSvT3xif2cYMyo2lU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameProduct\": \"bananO\",\r\n    \"description\": \"Este producto es de Estados Unidos\",\r\n    \"price\": 15.00,\r\n    \"stock\": 50,\r\n    \"name\": \"Frutas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products?limite=10&desde=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "limite",
+							"value": "10"
+						},
+						{
+							"key": "desde",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete Catalog",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Individual Products By Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products?category=FrutAs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "FrutAs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Individual Products By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products?nameProduct=ManZAna",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "nameProduct",
+							"value": "ManZAna"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products Out Of Stock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products?stock=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "stock",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Best Selling Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products?stock=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "stock",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products/67c5e55b3962f44f714c4dde",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products",
+						"67c5e55b3962f44f714c4dde"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M1YWI0MjViYTIwNWJhNTNhNTFhZTQiLCJpYXQiOjE3NDEwMTk2MjUsImV4cCI6MTc0MTAyMzIyNX0.m02dMVQXD2TeJHTE1j2RXSsQdy6jh0ROTRSim2TQg9A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameProduct\": \"Pashte\",\r\n    \"description\": \"Este producto es de Estados Unidos\",\r\n    \"price\": 15.15,\r\n    \"stock\": 10,\r\n    \"name\": \"Higiene\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products/67c5e55b3962f44f714c4dde",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products",
+						"67c5e55b3962f44f714c4dde"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M1YWI0MjViYTIwNWJhNTNhNTFhZTQiLCJpYXQiOjE3NDEwMjMzNzIsImV4cCI6MTc0MTAyNjk3Mn0.rrcdQZlzgKERXLxJemdd80d1aoKOcjPAkmuzG4JVZk4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameProduct\": \"Pashte\",\r\n    \"description\": \"Este producto es de Estados Unidos\",\r\n    \"price\": 15.15,\r\n    \"stock\": 10,\r\n    \"name\": \"Higiene\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products/67c5e55b3962f44f714c4dde",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products",
+						"67c5e55b3962f44f714c4dde"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restore Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2M1YWI0MjViYTIwNWJhNTNhNTFhZTQiLCJpYXQiOjE3NDEwMjMzNzIsImV4cCI6MTc0MTAyNjk3Mn0.rrcdQZlzgKERXLxJemdd80d1aoKOcjPAkmuzG4JVZk4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameProduct\": \"Pashte\",\r\n    \"description\": \"Este producto es de Estados Unidos\",\r\n    \"price\": 15.15,\r\n    \"stock\": 10,\r\n    \"name\": \"Higiene\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/onlineSale/v1/products/restore/67c5e55b3962f44f714c4dde",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"onlineSale",
+						"v1",
+						"products",
+						"restore",
+						"67c5e55b3962f44f714c4dde"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

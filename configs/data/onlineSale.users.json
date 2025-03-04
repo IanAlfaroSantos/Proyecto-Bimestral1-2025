@@ -1,0 +1,57 @@
+[{
+  "_id": {
+    "$oid": "67c1611e3908e405594d5476"
+  },
+  "name": "Pablo",
+  "surname": "Castillo",
+  "username": "pablo10",
+  "email": "pablo10@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$u6rsqKws5WivxnSXvtLpRQ$v3NdhCbq1RLmtYvkX//kmFULI2xLid3hbKhMVF8C+tM",
+  "phone": "26477372",
+  "role": "CLIENT",
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-02-28T07:09:18.039Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T12:36:05.578Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c161603908e405594d547a"
+  },
+  "name": "Luis",
+  "surname": "Cuxun",
+  "username": "cuxun",
+  "email": "cuxun@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$LB+h6sjn3h7flB8xyNNTAg$KwfW5SllLruRLA5nezWB69gPYsU1spKPMc/OPWJ+jd0",
+  "phone": "62732232",
+  "role": "CLIENT",
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-02-28T07:10:24.033Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:10:24.033Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c161853908e405594d547e"
+  },
+  "name": "Kevi",
+  "surname": "Gutierre",
+  "username": "kevin",
+  "email": "kevin@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$kOmaWunalNXzx3aXUTe0iQ$7Cl35j6tBqoORdUCXr2WmcMzjoLwwvH+SZDpNQnFX/0",
+  "phone": "32334232",
+  "role": "CLIENT",
+  "estado": true,
+  "createdAt": {
+    "$date": "2025-02-28T07:11:01.839Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-01T03:00:16.242Z"
+  }
+}]
