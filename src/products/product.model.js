@@ -4,7 +4,9 @@ const ProductSchema = Schema({
     nameProduct: {
         type: String,
         required: [true, "The name is required"],
-        maxlength: [50, "The name is more than 50 characters"]
+        maxlength: [50, "The name is more than 50 characters"],
+        unique: true,
+        lowercase: true
     },
     description: {
         type: String,

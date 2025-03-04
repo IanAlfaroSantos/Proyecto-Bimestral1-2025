@@ -57,8 +57,12 @@ export const saveProduct = async (req, res) => {
 export const getProducts = async (req = request, res = response) => {
     try {
 
-        const { limite = 10, desde = 0, category, stock } = req.query;
+        const { limite = 10, desde = 0, category, stock, nameProduct } = req.query;
         const query = { estado: true };
+
+        if (nameProduct) {
+            query.nameProduct = nameProduct.toLocaleLowerCase();
+        }
 
         if (category) {
             const categoryName = await Category.findOne({ name: category.toLowerCase() });
@@ -82,10 +86,10 @@ export const getProducts = async (req = request, res = response) => {
         const [total, products ] = await Promise.all([
             Product.countDocuments(query),
             Product.find(query)
-           .populate('category', 'name')
-           .sort(sort)
-           .skip(Number(desde))
-           .limit(Number(limite))
+            .populate('category', 'name')
+            .sort(sort)
+            .skip(Number(desde))
+            .limit(Number(limite))
         ]);
 
         res.status(200).json({

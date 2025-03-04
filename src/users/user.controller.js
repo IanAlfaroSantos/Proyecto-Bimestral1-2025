@@ -104,7 +104,7 @@ export const getUsers = async (req = request, res = response) => {
             User.countDocuments(query),
             User.find(query)
             .skip(Number(desde))
-           .limit(Number(limite))
+            .limit(Number(limite))
         ])
 
         res.status(200).json({
