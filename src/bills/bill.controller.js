@@ -69,7 +69,7 @@ export const generateBill = async (req, res) => {
         });
         
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false, msg:
             "Error generating bill",
             error
@@ -122,8 +122,7 @@ export const getBillUserById = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             msg: "Error retrieving bills",
             error
@@ -185,8 +184,8 @@ export const updateBill = async (req, res = response) => {
         });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
+        console.log(error);
+        return res.status(500).json({
             success: false,
             msg: "Error updating bill",
             error
