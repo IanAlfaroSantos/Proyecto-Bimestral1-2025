@@ -158,7 +158,7 @@ export const updateBill = async (req, res = response) => {
             const productName = nameProduct[i];
             const productAmount = amount[i];
 
-            const product = bill.products.find(item => item.product.nameProduct === productName);
+            const product = bill.products.find(item => item.product.nameProduct.toLowerCase() === productName.toLowerCase());
 
             //verficar que el producta si exista en la factura
             if (!product) {
