@@ -13,17 +13,24 @@ export const generateBill = async (req, res) => {
         if (req.user.id !== user._id.toString()) {
             return res.status(400).json({
                 success: false,
-                msg: "You do not have permission to add products to someone else's cart"
+                msg: "You do not have permission to generate a bill for another user"
             });
         }
 
-        //verifica que el carrito no este vacio
+        //verifica que el carrito exista
         if (!cart) {
             return res.status(400).json({
                 success: false,
                 msg: "Cart not found"
             });
         }
+
+    if (cart.products.length === 0) {
+        return res.status(400).json({
+            success: false,
+            msg: "Cart is empty"
+        });
+    }
   
         let total = 0;
         const products = [];
