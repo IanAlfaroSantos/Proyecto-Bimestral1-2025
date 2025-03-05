@@ -8,6 +8,7 @@ export const saveProduct = async (req, res) => {
         const data = req.body;
         const category = await Category.findOne({ name: data.name.toLowerCase() });
 
+        //por si ingresan un name de category que no existe en la base de datos
         if (!category) {
             console.log(category);
             return res.status(400).json({
@@ -16,6 +17,7 @@ export const saveProduct = async (req, res) => {
             });
         }
 
+        //verificar que sea solo administradores los que puedan agregar categorias
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -60,10 +62,12 @@ export const getProducts = async (req = request, res = response) => {
         const { limite = 10, desde = 0, category, stock, nameProduct } = req.query;
         const query = { estado: true };
 
+        //este lista solo el producto con el nombre que ponga en el parametro de la URL
         if (nameProduct) {
             query.nameProduct = nameProduct.toLocaleLowerCase();
         }
 
+        //este lista solo los productos con la categoria que ponga en el parametro de la URL
         if (category) {
             const categoryName = await Category.findOne({ name: category.toLowerCase() });
             if (categoryName) {
@@ -76,6 +80,7 @@ export const getProducts = async (req = request, res = response) => {
             }
         }
 
+        //este lista los productos agotados y los mas vendidos
         let sort = {};
         if (stock === "0") {
             query.stock = 0;
@@ -115,6 +120,7 @@ export const getProductById = async (req, res) => {
         const product = await Product.findById(id)
         .populate('category', 'name');
         
+        //por si ingresan el id de un producto que no existe en la base de datos
         if (!product) {
             return res.status(400).json({
                 success: false,
@@ -122,6 +128,7 @@ export const getProductById = async (req, res) => {
             });
         }
 
+        //por si el producto no esta disponible
         if (product.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -151,16 +158,19 @@ export const updateProduct = async (req, res = response) => {
         let { nameProduct } = req.body;
         let { name } = req.body;
 
+        //por si ingresan el nombre del producto que sea en minusculas
         if (nameProduct) {
             nameProduct = nameProduct.toLowerCase();
             data.nameProduct = nameProduct;
         }
 
+        //por si ingresan el nombre de la categoria que sea en minusculas
         if (name) {
             name = name.toLowerCase();
             data.name = name;
         }
 
+        //este valida que solo los administradores puedan actualizar los productos
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -168,6 +178,7 @@ export const updateProduct = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un id de un producto que no existe en la base de datos
         const product = await Product.findById(id);
         if (!product) {
             return res.status(400).json({
@@ -176,6 +187,7 @@ export const updateProduct = async (req, res = response) => {
             });
         }
 
+        //por si el producto no esta disponible
         if (product.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -183,6 +195,7 @@ export const updateProduct = async (req, res = response) => {
             });
         }
 
+        //por si ingresan el nombre de una categoria que no existe en la base de datos
         const category = await Category.findOne({ name });
         if (!category) {
             return res.status(400).json({
@@ -190,7 +203,6 @@ export const updateProduct = async (req, res = response) => {
                 msg: "Category not found"
             });
         }
-        
         data.category = category._id;
 
         await Product.findByIdAndUpdate(id, data, { new: true });
@@ -226,6 +238,7 @@ export const deleteProduct = async (req, res = response) => {
 
         const authenticatedUser = req.user;
 
+        //este valida que solo los administradores puedan eliminar los productos
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -233,6 +246,7 @@ export const deleteProduct = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un id de un producto que no existe en la base de datos
         const product = await Product.findById(id);
         if (!product) {
             return res.status(400).json({
@@ -241,6 +255,7 @@ export const deleteProduct = async (req, res = response) => {
             });
         }
 
+        //por si el producto ya esta deshabilitado
         if (product.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -273,6 +288,7 @@ export const restoreProduct = async (req, res = response) => {
 
         const authenticatedUser = req.user;
 
+        //este valida que solo los administradores puedan restaurar los productos
         if (req.user.role!== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -280,6 +296,7 @@ export const restoreProduct = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un id de un producto que no existe en la base de datos
         const product = await Product.findById(id);
         if (!product) {
             return res.status(400).json({
@@ -288,6 +305,7 @@ export const restoreProduct = async (req, res = response) => {
             });
         }
 
+        //por si el producto ya esta habilitado
         if (product.estado === true) {
             return res.status(400).json({
                 success: false,

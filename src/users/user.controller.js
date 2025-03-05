@@ -11,6 +11,7 @@ export const login = async (req, res) => {
         const lowerEmail = email ? email.toLowerCase() : null;
         const lowerUsername = username ? username.toLowerCase() : null;
 
+        //convertir email y username a minusculas asi no me da problemas
         const user = await User.findOne({
             $or: [
                 { email: lowerEmail },
@@ -18,6 +19,7 @@ export const login = async (req, res) => {
             ]
         });
 
+        //por si ingresan un email o username que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -25,6 +27,7 @@ export const login = async (req, res) => {
             });
         }
 
+        //por si el usuario esta desactivado
         if (user.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -32,8 +35,8 @@ export const login = async (req, res) => {
             });
         }
 
+        //por si la contraseña no es la correcta
         const validPassword = await verify(user.password, password);
-
         if (!validPassword) {
             return res.status(400).json({
                 success: false,
@@ -129,6 +132,7 @@ export const getUserById = async (req, res) => {
 
         const user = await User.findById(id);
 
+        //por si ingresan un id de usuario que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -136,6 +140,7 @@ export const getUserById = async (req, res) => {
             });
         }
 
+        //por si el usuario esta desactivado
         if (user.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -164,11 +169,13 @@ export const updateUser = async (req, res = response) => {
         const { _id, email, role, password, currentPassword, ...data } = req.body;
         let { username } = req.body;
 
+        // por si ingresan el username que se actualize en minusculas
         if (username) {
             username = username.toLowerCase();
             data.username = username;
         }
 
+        // para que no puedan actualizar al admin por defecto
         const user = await User.findById(id);
         if (user.username === "administrador") {
             return res.status(400).json({
@@ -177,6 +184,7 @@ export const updateUser = async (req, res = response) => {
             });
         }
         
+        //que solo puedan actualizar su propio perfil y no el de otros (los administradores puse que si puedan hacer todo)
         if (req.user.id !== id && req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -184,9 +192,9 @@ export const updateUser = async (req, res = response) => {
             });
         }
 
+        //es para validar que si introducen un usuario que no es el suyo pero existe en la base de datos de error, pero si no existe entonces que si actualize
         if (username !== user.username) {
             const existingUser = await User.findOne({ username });
-
             if (existingUser) {
                 return res.status(400).json({
                     success: false,
@@ -195,6 +203,7 @@ export const updateUser = async (req, res = response) => {
             }
         }
         
+        //por si ingresan un id de un usuario que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -202,6 +211,7 @@ export const updateUser = async (req, res = response) => {
             });
         }
 
+        //por si el usuario esta desactivado
         if (user.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -209,6 +219,7 @@ export const updateUser = async (req, res = response) => {
             });
         }
 
+        //validar que la contraseña sea correcta para poder actualizarla
         if (password) {
             if (!currentPassword) {
                 return res.status(400).json({
@@ -252,6 +263,7 @@ export const updateRole = async (req, res = response) => {
         const { id } = req.params;
         let { role } = req.body;
 
+        //es para que solo los administradores puedan cambiar el role de los demas usuarios
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -259,6 +271,7 @@ export const updateRole = async (req, res = response) => {
             });
         }
 
+        //para que no puedan cambiarle el role al admin por defecto
         const user = await User.findById(id);
         if (user.username === "administrador") {
             return res.status(400).json({
@@ -267,6 +280,7 @@ export const updateRole = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un id de un usuario que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -274,13 +288,13 @@ export const updateRole = async (req, res = response) => {
             });
         }
         
+        //por si el usuario esta desactivado
         if (user.estado === false) {
             return res.status(400).json({
                 success: false,
                 msg: 'Error user disabled'
             });
         }
-        
         
         const roleUpdate = await User.findByIdAndUpdate(id, { role }, { new: true });
         
@@ -310,6 +324,7 @@ export const deleteUser = async (req, res = response) => {
         
         const user = await User.findById(id);
         
+        //para que no puedan eliminar al admin por defecto
         if (user.username === "administrador") {
             return res.status(400).json({
                 success: false,
@@ -317,6 +332,7 @@ export const deleteUser = async (req, res = response) => {
             });
         }
 
+        //que solo puedan eliminar su propio perfil y no el de otros (los administradores puse que si puedan hacer todo)
         if (req.user.id !== id && req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -324,6 +340,7 @@ export const deleteUser = async (req, res = response) => {
             });
         }
         
+        //por si ingresan un id de un usuario que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -331,13 +348,15 @@ export const deleteUser = async (req, res = response) => {
             });
         }
         
+        //por si el usuario ya esta desactivado
         if (user.estado === false) {
             return res.status(400).json({
                 success: false,
                 msg: 'The user is already disabled'
             });
         }
-        
+
+        //validar que si ingresen el username para poder eliminarlo (parametro de seguridad)
         if (!username) {
             return res.status(400).json({
                 success: false,
@@ -345,6 +364,7 @@ export const deleteUser = async (req, res = response) => {
             });
         }
 
+        //validar que si ingresen la contraseña para poder eliminarlo (parametro de seguridad)
         if (!password) {
             return res.status(400).json({
                 success: false,
@@ -352,6 +372,7 @@ export const deleteUser = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un username que no es el suyo
         if (user.username !== username) {
             return res.status(400).json({
                 success: false,
@@ -359,8 +380,8 @@ export const deleteUser = async (req, res = response) => {
             });
         }
 
+        //validar que la contraseña sea correcta para poder eliminarlo
         const validPassword = await verify(user.password, password);
-
         if (!validPassword) {
             return res.status(400).json({
                 success: false,
@@ -395,14 +416,8 @@ export const restoreUser = async (req, res = response) => {
         const authenticatedUser = req.user;
         
         const user = await User.findById(id);
-        
-        if (user.username === "administrador") {
-            return res.status(400).json({
-                success: false,
-                msg: 'You cannot restore the main ADMIN'
-            });
-        }
 
+        //para que solo los admin puedan restaurar usuarios
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -410,6 +425,7 @@ export const restoreUser = async (req, res = response) => {
             });
         }
         
+        //por si ingresan un id de un usuario que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -417,6 +433,7 @@ export const restoreUser = async (req, res = response) => {
             });
         }
         
+        //por si el usuario ya esta habilitado
         if (user.estado === true) {
             return res.status(400).json({
                 success: false,
@@ -424,6 +441,7 @@ export const restoreUser = async (req, res = response) => {
             });
         }
 
+        //por si no ingresan el username del usuario (parametro de seguridad)
         if (!username) {
             return res.status(400).json({
                 success: false,
@@ -431,6 +449,7 @@ export const restoreUser = async (req, res = response) => {
             });
         }
 
+        //por si no ingresan la contraseña del usuario (parametro de seguridad)
         if (!password) {
             return res.status(400).json({
                 success: false,
@@ -438,6 +457,7 @@ export const restoreUser = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un username que no es el de ese usuario
         if (user.username !== username) {
             return res.status(400).json({
                 success: false,
@@ -445,8 +465,8 @@ export const restoreUser = async (req, res = response) => {
             });
         }
         
+        //validar que la contraseña sea correcta para poder habilitarlo
         const validPassword = await verify(user.password, password);
-        
         if (!validPassword) {
             return res.status(400).json({
                 success: false,
@@ -475,8 +495,8 @@ export const restoreUser = async (req, res = response) => {
 export const createAdmin = async () => {
     try {
 
+        //verificar que si el usuario admin por defecto existe en la base de datos, si no lo crea
         const verifyUser = await User.findOne({ username: "Administrador".toLowerCase() });
-
         if (!verifyUser) {
             const encryptedPassword = await hash("Admin100");
             const adminUser = await User.create({

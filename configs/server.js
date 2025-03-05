@@ -12,6 +12,7 @@ import { defaultCategory } from '../src/categories/category.controller.js';
 import categoryRoutes from "../src/categories/category.routes.js";
 import productRoutes from "../src/products/product.routes.js";
 import cartRoutes from "../src/cart/cart.routes.js";
+import billRoutes from "../src/bills/bill.routes.js"
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -27,6 +28,7 @@ const routes = (app) => {
     app.use("/onlineSale/v1/categories", categoryRoutes);
     app.use("/onlineSale/v1/products", productRoutes);
     app.use("/onlineSale/v1/cart", cartRoutes);
+    app.use("/onlineSale/v1/bills", billRoutes);
 };
 
 const conectarDB = async () => {

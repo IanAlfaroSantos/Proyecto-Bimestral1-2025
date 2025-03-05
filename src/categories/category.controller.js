@@ -7,6 +7,7 @@ export const saveCategory = async (req, res) => {
 
         const data = req.body;
 
+        //este verifica que solo los administradores puedan agregar categorias
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -40,6 +41,7 @@ export const getCategories = async (req = request, res = response) => {
         const { limite = 10, desde = 0 } = req.body;
         const query = { estado: true };
 
+        //Este verifica que solo los administradores puedan ver las categorias
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -74,6 +76,7 @@ export const getCategoryById = async (req, res) => {
 
         const { id } = req.params;
 
+        //Este verifica que solo los administradores puedan buscar las categorias por medio del id
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -81,8 +84,8 @@ export const getCategoryById = async (req, res) => {
             })
         }
 
+        //por si ingresan un id de categoria que no existe en la base de datos
         const category = await Category.findById(id);
-
         if (!category) {
             return res.status(404).json({
                 success: false,
@@ -90,6 +93,7 @@ export const getCategoryById = async (req, res) => {
             });
         }
 
+        //por si la categoria no esta disponible
         if (category.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -118,13 +122,14 @@ export const updateCategory = async (req, res = response) => {
         const { _id, ...data } = req.body;
         let { name } = req.body;
 
+        //por si ingresan el nombre de la categoria que se actualize en minusculas
         if (name) {
             name = name.toLowerCase();
             data.name = name;
         }
 
+        //por si ingresan un id de categoria que no existe en la base de datos
         const category = await Category.findById(id);
-
         if (!category) {
             return res.status(404).json({
                 success: false,
@@ -132,8 +137,8 @@ export const updateCategory = async (req, res = response) => {
             });
         }
 
+        //para que no puedan actualizar la categoria por defecto
         const categoryGeneral = await Category.findOne({ name: "General".toLowerCase() });
-
         if (categoryGeneral && id === categoryGeneral._id.toString()) {
             return res.status(400).json({
                 success: false,
@@ -141,6 +146,7 @@ export const updateCategory = async (req, res = response) => {
             });
         }
 
+        //por si la categoria no esta disponible
         if (category.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -148,6 +154,7 @@ export const updateCategory = async (req, res = response) => {
             });
         }
 
+        //este verifica que solo los administradores puedan actualizar las categorias
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -155,9 +162,9 @@ export const updateCategory = async (req, res = response) => {
             });
         }
 
+        //es para validar que si introducen un nombre de categoria que no es el mismo al que tiene pero que existe en la base de datos de error, pero si no existe entonces que si actualize
         if (name !== category.name) {
             const existingCategory = await Category.findOne({ name });
-
             if (existingCategory) {
                 return res.status(400).json({
                     success: false,
@@ -190,6 +197,7 @@ export const deleteCategory = async (req, res = response) => {
 
         const authenticatedUser = req.user;
 
+        //este verifica que solo los administradores puedan eliminar una categoria
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -197,8 +205,8 @@ export const deleteCategory = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un id de categoria que no existe en la base de datos
         const category = await Category.findById(id);
-
         if (!category) {
             return res.status(404).json({
                 success: false,
@@ -206,6 +214,7 @@ export const deleteCategory = async (req, res = response) => {
             });
         }
 
+        //por si la categoria ya esta eliminada
         if (category.estado === false) {
             return res.status(400).json({
                 success: false,
@@ -213,8 +222,8 @@ export const deleteCategory = async (req, res = response) => {
             });
         }
 
+        //para que no puedan eliminar la categoria por defecto
         const categoryGeneral = await Category.findOne({ name: "General".toLowerCase() });
-
         if (categoryGeneral && id === categoryGeneral._id.toString()) {
             return res.status(400).json({
                 success: false,
@@ -222,7 +231,7 @@ export const deleteCategory = async (req, res = response) => {
             });
         }
 
-        const product = await Product.updateMany(
+        await Product.updateMany(
             { category: id },
             { $set: { category: categoryGeneral._id }}
         );
@@ -252,6 +261,7 @@ export const restoreCategory = async (req, res = response) => {
 
         const authenticatedUser = req.user;
 
+        //este verifica que solo los administradores puedan restaurar una categoria
         if (req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
@@ -259,8 +269,8 @@ export const restoreCategory = async (req, res = response) => {
             });
         }
 
+        //por si ingresan un id de categoria que no existe en la base de datos
         const category = await Category.findById(id);
-
         if (!category) {
             return res.status(404).json({
                 success: false,
@@ -268,19 +278,11 @@ export const restoreCategory = async (req, res = response) => {
             });
         }
 
+        //por si la categoria ya se restauro
         if (category.estado === true) {
             return res.status(400).json({
                 success: false,
                 msg: "The category is already enabled"
-            });
-        }
-
-        const categoryGeneral = await Category.findOne({ name: "General".toLowerCase() });
-
-        if (categoryGeneral && id === categoryGeneral._id.toString()) {
-            return res.status(400).json({
-                success: false,
-                msg: "You cannot restore the category default General"
             });
         }
 
@@ -305,8 +307,8 @@ export const restoreCategory = async (req, res = response) => {
 export const defaultCategory = async () => {
     try {
 
+        //Verifica si la categoria por defecto existe en la base de datos, si no la crea
         const verifyCategory = await Category.findOne({ name: "General".toLowerCase() });
-        
         if (!verifyCategory) {
             const categoryGeneral = new Category({
                 name: "General",

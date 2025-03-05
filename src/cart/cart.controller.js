@@ -7,6 +7,7 @@ export const addCart = async (req, res) => {
         const data = req.body;
         const user = await User.findOne({ username: String(data.username).toLowerCase() });
 
+        //por si ingresan un usuario que no existe en la base de datos
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -14,6 +15,7 @@ export const addCart = async (req, res) => {
             });
         }
 
+        //verifica que el usuario ingresado sea el mismo que el usuario que va a agregar
         if (req.user.id !== user._id.toString()) {
             return res.status(400).json({
                 success: false,
@@ -25,6 +27,7 @@ export const addCart = async (req, res) => {
         for (let i = 0; i < data.nameProduct.length; i++) {
             const product = await Product.findOne({ nameProduct: String(data.nameProduct[i]).toLowerCase() });
 
+            //verifica que el o los productos ingresados si existan en la base de datos
             if (!product) {
                 return res.status(400).json({
                     success: false,
@@ -32,6 +35,7 @@ export const addCart = async (req, res) => {
                 });
             }
             
+            //verifica que el stock del producto sea suficiente para agregarlo al carrito
             if (product.stock < data.amount[i]) {
                 return res.status(400).json({
                     success: false,
@@ -41,12 +45,14 @@ export const addCart = async (req, res) => {
 
             products.push({
                 product: product._id,
+                nameProduct: product.nameProduct,
+                price: product.price,
                 amount: data.amount[i]
             });
         }
 
+        //busca el carrito del usuario en la base de datos, si no lo encuentra, lo crea
         let cart = await Cart.findOne({ user: user._id });
-
         if (!cart) {
             cart = new Cart({
                 user: user._id,
@@ -58,6 +64,7 @@ export const addCart = async (req, res) => {
                     (item) => item.product.toString() === products[i].product.toString()
                 );
         
+                //verifica que si ya existe el producto solo se sume la cantidad con la cantidad nueva, si no crea otro producto en el arreglo
                 if (productCart) {
                     productCart.amount += products[i].amount;
                 } else {
@@ -78,16 +85,12 @@ export const addCart = async (req, res) => {
             .populate('user', 'username')
             .populate({
                 path: 'products.product',
-                select: 'nameProduct price',
-                populate: {
-                    path: 'category',
-                    select: 'name'
-                }
+                select: 'nameProduct price'
             });
 
         res.status(200).json({
             success: true,
-            msg: "Product(s) added to cart successfully",
+            msg: "Products added to cart successfully",
             detailsCart
         });
 
