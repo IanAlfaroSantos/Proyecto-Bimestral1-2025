@@ -89,13 +89,6 @@ export const getBillUserById = async (req, res) => {
             });
         }
 
-        const bills = await Bill.find({ user: id })
-        .populate('user', 'username')
-        .populate({
-            path: 'products.product',
-                select: 'nameProduct price'
-            });
-        
         //verifica que la factura exista en la base de datos
         if (!bills) {
             return res.status(404).json({
@@ -112,8 +105,18 @@ export const getBillUserById = async (req, res) => {
             });
         }
 
+        const total = await Bill.countDocuments({ user: id });
+        const bills = await Bill.find({ user: id })
+        .populate('user', 'username')
+        .populate({
+            path: 'products.product',
+                select: 'nameProduct price'
+            });
+        
+
         res.status(200).json({
             success: true,
+            total,
             bills
         });
 
