@@ -3,7 +3,7 @@ import { check } from "express-validator";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { existeUserById, existeBillById } from "../helpers/db-validator.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
-import { generateBill, getBillUserById, updateBill } from "./bill.controller.js";
+import { generateBill, getBillUserById, getBillById, updateBill } from "./bill.controller.js";
 
 const router = Router();
 
@@ -22,6 +22,17 @@ router.get(
         validarCampos
     ],
     getBillUserById
+);
+
+router.get(
+    "/admin/:id",
+    [
+        validarJWT,
+        check("id", "Invalid ID").not().isEmpty(),
+        check("id").custom(existeBillById),
+        validarCampos
+    ],
+    getBillById
 );
 
 router.put(

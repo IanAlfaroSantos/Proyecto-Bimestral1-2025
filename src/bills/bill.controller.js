@@ -81,9 +81,9 @@ export const getBillUserById = async (req, res) => {
     try {
         const { id } = req.params;
         
-        //verifica que el usuario ingresado sea el mismo que el usuario que va a buscar sus facturas
+        //verifica que el usuario ingresado sea el mismo que el usuario que va a buscar sus facturas (admins tambien pueden hacerlo)
         const user = await User.findById(id);
-        if (req.user.id !== user._id.toString()) {
+        if (req.user.id !== user._id.toString() && req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
                 msg: "You do not have permission to search a bill for another user"
@@ -190,7 +190,6 @@ export const updateBill = async (req, res = response) => {
         });
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success: false,
             msg: "Error updating bill",
@@ -198,3 +197,39 @@ export const updateBill = async (req, res = response) => {
         });
     }
 };
+
+export const getBillById = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        //verifica que solo los admin puedan buscar las facturas por ID
+        if (req.user.role !== "ADMIN") {
+            return res.status(400).json({
+                success: false,
+                msg: "You do not have permission to view this bill"
+            });
+        }
+
+        //verifica que la factura exista en la base de datos
+        const bill = await Bill.findById(id).populate('products.product');
+        if (!bill) {
+            return res.status(404).json({
+                success: false,
+                msg: "Bill not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            bill
+        });
+        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: "Error retrieving bill",
+            error
+        });
+    }
+}
