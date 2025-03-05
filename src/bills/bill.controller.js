@@ -83,7 +83,7 @@ export const getBillUserById = async (req, res) => {
         
         //verifica que el usuario ingresado sea el mismo que el usuario que va a buscar sus facturas
         const user = await User.findById(id);
-        if (req.user.id !== user._id.toString() && req.user.role !== "ADMIN") {
+        if (req.user.id !== user._id.toString()) {
             return res.status(400).json({
                 success: false,
                 msg: "You do not have permission to search a bill for another user"
@@ -167,6 +167,12 @@ export const updateBill = async (req, res = response) => {
                     msg: `Product "${productName}" not found in this bill`
                 });
             }
+
+            const previousAmount = product.amount;
+            const changeStock = productAmount - previousAmount;
+
+            product.product.stock -= changeStock;
+            await product.product.save();
 
             product.amount = productAmount;
 
