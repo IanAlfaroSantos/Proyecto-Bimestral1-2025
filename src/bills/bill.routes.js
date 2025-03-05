@@ -3,7 +3,7 @@ import { check } from "express-validator";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { existeBillById } from "../helpers/db-validator.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
-import { generateBill } from "./bill.controller.js";
+import { generateBill, getBillUserById } from "./bill.controller.js";
 
 const router = Router();
 
@@ -21,7 +21,7 @@ router.get(
         check("id").custom(existeBillById),
         validarCampos
     ],
-    getBillById
+    getBillUserById
 );
 
 export default router;
