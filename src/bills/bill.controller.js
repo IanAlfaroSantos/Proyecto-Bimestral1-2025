@@ -144,7 +144,7 @@ export const updateBill = async (req, res = response) => {
         }
 
         //verifica que la factura exista en la base de datos
-        const bill = await Bill.findOne({ user: id }).populate('products.product');
+        const bill = await Bill.findById(id).populate('products.product');
         if (!bill) {
             return res.status(400).json({
                 success: false,
