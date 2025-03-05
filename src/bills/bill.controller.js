@@ -17,7 +17,7 @@ export const generateBill = async (req, res) => {
             });
         }
 
-        //verifica que el carrito no esté vacío
+        //verifica que el carrito no este vacio
         if (!cart) {
             return res.status(400).json({
                 success: false,
@@ -32,8 +32,6 @@ export const generateBill = async (req, res) => {
 
             products.push({
                 product: cart.products[i].product._id,
-                nameProduct: cart.products[i].product.nameProduct,
-                price: cart.products[i].product.price,
                 amount: cart.products[i].amount
             });
         }
@@ -43,7 +41,8 @@ export const generateBill = async (req, res) => {
             products: products,
             total: total
         });
-  
+
+        cart.products = [];
         await bill.save();
 
         const detailsBill = await Bill.findById(bill._id)
@@ -56,8 +55,7 @@ export const generateBill = async (req, res) => {
         res.status(200).json({
             success: true,
             msg: "Bill generated successfully",
-            detailsBill,
-            bill
+            detailsBill
         });
   
     } catch (error) {
