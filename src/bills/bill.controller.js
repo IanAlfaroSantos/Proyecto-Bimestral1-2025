@@ -1,6 +1,7 @@
 import Bill from "./bill.model.js";
 import Cart from "../cart/cart.model.js";
 import User from "../users/user.model.js";
+import { request, response } from "express";
 
 export const generateBill = async (req, res) => {
     try {
@@ -82,7 +83,7 @@ export const getBillUserById = async (req, res) => {
         
         //verifica que el usuario ingresado sea el mismo que el usuario que va a buscar sus facturas
         const user = await User.findById(id);
-        if (req.user.id !== user._id.toString()) {
+        if (req.user.id !== user._id.toString() && req.user.role !== "ADMIN") {
             return res.status(400).json({
                 success: false,
                 msg: "You do not have permission to search a bill for another user"
@@ -113,7 +114,7 @@ export const getBillUserById = async (req, res) => {
                 msg: "No bills found for this user"
             });
         }
-        
+
         res.status(200).json({
             success: true,
             total,
@@ -125,6 +126,69 @@ export const getBillUserById = async (req, res) => {
         res.status(500).json({
             success: false,
             msg: "Error retrieving bills",
+            error
+        });
+    }
+};
+
+export const updateBill = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+        const { nameProduct, amount } = req.body;
+
+        //verifica que solo los admin puedan editar
+        if (req.user.role !== 'ADMIN') {
+            return res.status(400).json({
+                success: false,
+                msg: "You do not have permission to edit this bill"
+            });
+        }
+
+        //verifica que la factura exista en la base de datos
+        const bill = await Bill.findOne({ user: id }).populate('products.product');
+        if (!bill) {
+            return res.status(400).json({
+                success: false,
+                msg: "Bill not found"
+            });
+        }
+
+        let total = 0;
+        
+        for (let i = 0; i < nameProduct.length; i++) {
+            const productName = nameProduct[i];
+            const productAmount = amount[i];
+
+            const product = bill.products.find(item => item.product.nameProduct === productName);
+
+            //verficar que el producta si exista en la factura
+            if (!product) {
+                return res.status(400).json({
+                    success: false,
+                    msg: `Product "${productName}" not found in this bill`
+                });
+            }
+
+            product.amount = productAmount;
+
+            total += product.product.price * productAmount;
+        }
+
+        bill.total = total;
+
+        const updatedBill = await Bill.findByIdAndUpdate(id, { products: bill.products, total: bill.total }, { new: true });
+
+        res.status(200).json({
+            success: true,
+            msg: "Bill updated successfully",
+            updatedBill
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error updating bill",
             error
         });
     }
