@@ -42,8 +42,10 @@ export const generateBill = async (req, res) => {
             total: total
         });
 
-        cart.products = [];
         await bill.save();
+
+        cart.products = [];
+        await cart.save();
 
         const detailsBill = await Bill.findById(bill._id)
             .populate('user', 'username')
