@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarJWT } from "../middlewares/validar-jwt.js";
-import { existeBillById } from "../helpers/db-validator.js";
+import { existeUserById } from "../helpers/db-validator.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { generateBill, getBillUserById } from "./bill.controller.js";
 
@@ -18,7 +18,7 @@ router.get(
     [
         validarJWT,
         check("id", "Invalid ID").not().isEmpty(),
-        check("id").custom(existeBillById),
+        check("id").custom(existeUserById),
         validarCampos
     ],
     getBillUserById

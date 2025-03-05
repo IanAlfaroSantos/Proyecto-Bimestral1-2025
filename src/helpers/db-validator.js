@@ -1,7 +1,6 @@
 import User from "../users/user.model.js";
 import Category from "../categories/category.model.js";
 import Product from "../products/product.model.js";
-import Bill from "../bills/bill.model.js"
 
 export const existenteEmail = async (email = ' ') => {
 
@@ -62,15 +61,6 @@ export const existeProductById = async (id = '') => {
     const existeProduct = await Product.findById(id);
 
     if (!existeProduct) {
-        throw new Error(`The ID ${ id } does not exist in the database`);
-    }
-}
-
-export const existeBillById = async (id = '') => {
-
-    const existeBill = await Bill.findById(id);
-
-    if (!existeBill) {
         throw new Error(`The ID ${ id } does not exist in the database`);
     }
 }
